@@ -1,0 +1,7 @@
+{
+  "name": "native-addon",
+  "scripts": {
+    "postinstall": "node-gyp rebuild",
+    "test": "jest"
+  }
+}

@@ -1,0 +1,50 @@
+[
+  {
+    "skill": ".agents/skills/google",
+    "verdict": "SAFE",
+    "score": 0,
+    "findings": 0
+  },
+  {
+    "skill": ".agents/skills/vercel",
+    "verdict": "MALICIOUS",
+    "score": 50,
+    "findings": 2
+  },
+  {
+    "skill": ".gemini/skills/clawhub",
+    "verdict": "SAFE",
+    "score": 0,
+    "findings": 0
+  },
+  {
+    "skill": ".gemini/skills/skill-defender-1.0.0",
+    "verdict": "MALICIOUS",
+    "score": 765,
+    "findings": 66
+  },
+  {
+    "skill": ".gemini/skills/snyk-skill",
+    "verdict": "MALICIOUS",
+    "score": 25,
+    "findings": 1
+  },
+  {
+    "skill": ".gemini/skills/testing-guidelines",
+    "verdict": "SAFE",
+    "score": 0,
+    "findings": 0
+  },
+  {
+    "skill": ".gemini/skills/vercel",
+    "verdict": "MALICIOUS",
+    "score": 70,
+    "findings": 4
+  },
+  {
+    "skill": "demos/skill-with-commands",
+    "verdict": "SAFE",
+    "score": 0,
+    "findings": 0
+  }
+]

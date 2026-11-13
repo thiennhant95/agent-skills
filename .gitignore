@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+.undo-journal/
+.sandbox/
+*.skill
+*.zip

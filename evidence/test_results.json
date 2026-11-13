@@ -1,0 +1,417 @@
+{
+  "harness": "skill-firewall verification harness v1.0",
+  "ran_at_utc": "2026-11-13T15:06:08.894341+00:00",
+  "scanner_version": "1.1.0",
+  "metrics": {
+    "total_malicious": 18,
+    "total_benign": 15,
+    "true_positives": 18,
+    "false_negatives": 0,
+    "true_negatives": 15,
+    "false_positives": 0,
+    "detection_rate": 1.0,
+    "false_positive_rate": 0.0,
+    "precision": 1.0,
+    "accuracy": 1.0
+  },
+  "criteria": {
+    "detection_rate_100pct": true,
+    "false_positives_0": true
+  },
+  "overall_pass": true,
+  "results": [
+    {
+      "fixture": "m01_instruction_override.md",
+      "kind": "malicious",
+      "verdict": "MALICIOUS",
+      "score": 64,
+      "findings": 7,
+      "detected": true,
+      "rules": [
+        "SF101",
+        "SF102",
+        "SF104",
+        "SF105",
+        "SF106"
+      ]
+    },
+    {
+      "fixture": "m02_credential_theft.md",
+      "kind": "malicious",
+      "verdict": "MALICIOUS",
+      "score": 122,
+      "findings": 11,
+      "detected": true,
+      "rules": [
+        "SF104",
+        "SF201",
+        "SF202",
+        "SF204",
+        "SF205",
+        "SF206"
+      ]
+    },
+    {
+      "fixture": "m03_reverse_shell.sh",
+      "kind": "malicious",
+      "verdict": "MALICIOUS",
+      "score": 150,
+      "findings": 9,
+      "detected": true,
+      "rules": [
+        "SF201",
+        "SF202",
+        "SF204",
+        "SF302",
+        "SF304",
+        "SF305"
+      ]
+    },
+    {
+      "fixture": "m04_base64_payload.py.md",
+      "kind": "malicious",
+      "verdict": "MALICIOUS",
+      "score": 44,
+      "findings": 5,
+      "detected": true,
+      "rules": [
+        "SF101",
+        "SF401",
+        "SF403"
+      ]
+    },
+    {
+      "fixture": "m05_destructive.md",
+      "kind": "malicious",
+      "verdict": "MALICIOUS",
+      "score": 145,
+      "findings": 7,
+      "detected": true,
+      "rules": [
+        "SF301",
+        "SF303"
+      ]
+    },
+    {
+      "fixture": "m06_env_exfil.py",
+      "kind": "malicious",
+      "verdict": "MALICIOUS",
+      "score": 54,
+      "findings": 6,
+      "detected": true,
+      "rules": [
+        "SF202",
+        "SF203",
+        "SF204",
+        "SF205",
+        "SF206"
+      ]
+    },
+    {
+      "fixture": "m07_fake_system_tag.md",
+      "kind": "malicious",
+      "verdict": "MALICIOUS",
+      "score": 90,
+      "findings": 9,
+      "detected": true,
+      "rules": [
+        "SF101",
+        "SF102",
+        "SF103",
+        "SF104"
+      ]
+    },
+    {
+      "fixture": "m08_stealth_zwc.md",
+      "kind": "malicious",
+      "verdict": "MALICIOUS",
+      "score": 40,
+      "findings": 4,
+      "detected": true,
+      "rules": [
+        "SF104",
+        "SF204",
+        "SF206",
+        "SF404"
+      ]
+    },
+    {
+      "fixture": "m09_persistence.md",
+      "kind": "malicious",
+      "verdict": "MALICIOUS",
+      "score": 129,
+      "findings": 9,
+      "detected": true,
+      "rules": [
+        "SF201",
+        "SF302",
+        "SF303",
+        "SF304",
+        "SF601"
+      ]
+    },
+    {
+      "fixture": "m10_hex_payload.js",
+      "kind": "malicious",
+      "verdict": "MALICIOUS",
+      "score": 40,
+      "findings": 4,
+      "detected": true,
+      "rules": [
+        "SF101",
+        "SF401",
+        "SF402"
+      ]
+    },
+    {
+      "fixture": "m11_self_modifying.md",
+      "kind": "malicious",
+      "verdict": "MALICIOUS",
+      "score": 115,
+      "findings": 7,
+      "detected": true,
+      "rules": [
+        "SF104",
+        "SF106",
+        "SF206",
+        "SF502"
+      ]
+    },
+    {
+      "fixture": "m12_spread_external.md",
+      "kind": "malicious",
+      "verdict": "MALICIOUS",
+      "score": 70,
+      "findings": 4,
+      "detected": true,
+      "rules": [
+        "SF501",
+        "SF503"
+      ]
+    },
+    {
+      "fixture": "m13_example_disguise.md",
+      "kind": "malicious",
+      "verdict": "MALICIOUS",
+      "score": 40,
+      "findings": 4,
+      "detected": true,
+      "rules": [
+        "SF105",
+        "SF201",
+        "SF204",
+        "SF301"
+      ]
+    },
+    {
+      "fixture": "m14_homoglyph.md",
+      "kind": "malicious",
+      "verdict": "MALICIOUS",
+      "score": 75,
+      "findings": 6,
+      "detected": true,
+      "rules": [
+        "SF101",
+        "SF105",
+        "SF201",
+        "SF204",
+        "SF407"
+      ]
+    },
+    {
+      "fixture": "m15_double_b64.md",
+      "kind": "malicious",
+      "verdict": "MALICIOUS",
+      "score": 36,
+      "findings": 3,
+      "detected": true,
+      "rules": [
+        "SF101",
+        "SF204",
+        "SF206"
+      ]
+    },
+    {
+      "fixture": "m16_markdown_beacon.md",
+      "kind": "malicious",
+      "verdict": "SUSPICIOUS",
+      "score": 14,
+      "findings": 2,
+      "detected": true,
+      "rules": [
+        "SF104",
+        "SF408"
+      ]
+    },
+    {
+      "fixture": "m17_supply_chain.json",
+      "kind": "malicious",
+      "verdict": "MALICIOUS",
+      "score": 39,
+      "findings": 3,
+      "detected": true,
+      "rules": [
+        "SF204",
+        "SF601",
+        "SF602"
+      ]
+    },
+    {
+      "fixture": "m18_ci_injection.yml",
+      "kind": "malicious",
+      "verdict": "MALICIOUS",
+      "score": 55,
+      "findings": 4,
+      "detected": true,
+      "rules": [
+        "SF201",
+        "SF204",
+        "SF603"
+      ]
+    },
+    {
+      "fixture": "b01_pdf_rotate.md",
+      "kind": "benign",
+      "verdict": "SAFE",
+      "score": 0,
+      "findings": 0,
+      "clean": true,
+      "rules": []
+    },
+    {
+      "fixture": "b02_weather_curl.md",
+      "kind": "benign",
+      "verdict": "SAFE",
+      "score": 0,
+      "findings": 0,
+      "clean": true,
+      "rules": []
+    },
+    {
+      "fixture": "b03_security_education.md",
+      "kind": "benign",
+      "verdict": "CAUTION",
+      "score": 16,
+      "findings": 7,
+      "clean": true,
+      "rules": [
+        "SF101",
+        "SF201",
+        "SF204",
+        "SF206",
+        "SF301",
+        "SF305"
+      ]
+    },
+    {
+      "fixture": "b04_code_linter.md",
+      "kind": "benign",
+      "verdict": "SAFE",
+      "score": 0,
+      "findings": 0,
+      "clean": true,
+      "rules": []
+    },
+    {
+      "fixture": "b05_base64_font.md",
+      "kind": "benign",
+      "verdict": "SAFE",
+      "score": 0,
+      "findings": 0,
+      "clean": true,
+      "rules": []
+    },
+    {
+      "fixture": "b06_vn_tax.md",
+      "kind": "benign",
+      "verdict": "SAFE",
+      "score": 0,
+      "findings": 0,
+      "clean": true,
+      "rules": []
+    },
+    {
+      "fixture": "b07_git_workflow.md",
+      "kind": "benign",
+      "verdict": "SAFE",
+      "score": 0,
+      "findings": 0,
+      "clean": true,
+      "rules": []
+    },
+    {
+      "fixture": "b08_voice_tts.md",
+      "kind": "benign",
+      "verdict": "SAFE",
+      "score": 0,
+      "findings": 0,
+      "clean": true,
+      "rules": []
+    },
+    {
+      "fixture": "b09_meeting_notes.md",
+      "kind": "benign",
+      "verdict": "SAFE",
+      "score": 0,
+      "findings": 0,
+      "clean": true,
+      "rules": []
+    },
+    {
+      "fixture": "b10_data_analysis.md",
+      "kind": "benign",
+      "verdict": "SAFE",
+      "score": 0,
+      "findings": 0,
+      "clean": true,
+      "rules": []
+    },
+    {
+      "fixture": "b11_rustup_install.md",
+      "kind": "benign",
+      "verdict": "CAUTION",
+      "score": 4,
+      "findings": 1,
+      "clean": true,
+      "rules": [
+        "SF601"
+      ]
+    },
+    {
+      "fixture": "b12_readme_badges.md",
+      "kind": "benign",
+      "verdict": "SAFE",
+      "score": 0,
+      "findings": 0,
+      "clean": true,
+      "rules": []
+    },
+    {
+      "fixture": "b13_package_ok.json",
+      "kind": "benign",
+      "verdict": "SAFE",
+      "score": 0,
+      "findings": 0,
+      "clean": true,
+      "rules": []
+    },
+    {
+      "fixture": "b14_actions_ok.yml",
+      "kind": "benign",
+      "verdict": "SAFE",
+      "score": 0,
+      "findings": 0,
+      "clean": true,
+      "rules": []
+    },
+    {
+      "fixture": "b15_multilingual.md",
+      "kind": "benign",
+      "verdict": "SAFE",
+      "score": 0,
+      "findings": 0,
+      "clean": true,
+      "rules": []
+    }
+  ]
+}

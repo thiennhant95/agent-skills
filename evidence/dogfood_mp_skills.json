@@ -1,0 +1,25 @@
+{
+  "target": "mattpocock/skills",
+  "verdict": "CAUTION",
+  "score": 2,
+  "files": 182,
+  "findings": 2,
+  "detail": [
+    {
+      "sev": "LOW",
+      "rule": "SF406",
+      "ctx": false,
+      "file": "CHANGELOG.md",
+      "line": 83,
+      "excerpt": "com/mattpocock/skills/commit/4f289474bad013fe2be8f8769d733f59d9103d6b"
+    },
+    {
+      "sev": "LOW",
+      "rule": "SF206",
+      "ctx": false,
+      "file": "skills/in-progress/software-factory/OBSERVABILITY-PLATFORMS.md",
+      "line": 14,
+      "excerpt": "- **Hook plugin**: a Claude Code hook reads the session transcript at each Stop and ships it, as in Langfuse's Claude Co"
+    }
+  ]
+}
