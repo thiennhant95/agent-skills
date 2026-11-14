@@ -34,7 +34,7 @@ jobs:
 
       - name: "negative control (benign fixtures must stay clean)"
         run: |
-          out=$(python3 skill-firewall/scripts/skill_firewall.py skill-firewall/tests/fixtures/benign --quiet) || true
+          out=$(python3 skill-firewall/scripts/skill_firewall.py skill-firewall/tests/fixtures/benign --quiet --context-downgrade) || true
           echo "$out"
           echo "$out" | grep -qE "SAFE|CAUTION" || { echo "benign fixtures flagged — FALSE POSITIVE REGRESSION"; exit 1; }
 

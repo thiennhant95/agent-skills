@@ -26,8 +26,13 @@ import sys
 from dataclasses import dataclass, field, asdict
 from datetime import datetime, timezone
 
-SCANNER_VERSION = "1.1.0"
+SCANNER_VERSION = "1.1.3"
 RULESET_VERSION = "2026.11.13.2"
+
+# Strict by default: context keywords must NOT silently lower severity.
+# Enabled only via the explicit --context-downgrade opt-in (e.g. when auditing
+# a known security-education document).
+_context_downgrade_enabled = False
 
 # ---------------------------------------------------------------------------
 # Severity model
@@ -439,6 +444,8 @@ OFFENSIVE_CTX = re.compile(
 
 def context_downgrade(line: str, rank: int):
     """Return (new_rank, kind) where kind in {none, example, defensive}."""
+    if not _context_downgrade_enabled:
+        return rank, "none"
     if OFFENSIVE_CTX.search(line):
         return rank, "none"  # attack phrasing — full severity
     if DEFENSIVE_CTX.search(line):
@@ -482,45 +489,26 @@ def read_text(path: str) -> str:
 # ---------------------------------------------------------------------------
 # Core scanning
 # ---------------------------------------------------------------------------
-SECURITY_DOC_NAME = re.compile(
-    r"(security|threat|red.?flag|malicious|attack|vetting|hardening|injection|pentest|toxic"
-    r"|firewall|scanner|defend|detector|antivirus|sanitiz|guard)", re.IGNORECASE)
-
-
 def finalize_file_findings(findings: list, relpath: str):
     """
-    File-level context gate (anti-false-positive + anti-disguise):
+    Opt-in context mode only (default is strict).
 
-    Downgrades apply ONLY when the file itself reads as defensive/educational
-    (security documentation by name, or >= 50% of finding lines carry defensive
-    context). A malicious file that sprinkles 'Example:' or 'never' onto a few
-    lines keeps full severity, so the disguise trick fails.
+    Filenames never influence severity. When --context-downgrade is enabled,
+    a line carrying defensive phrasing is lowered by two rank steps and a line
+    with example phrasing by one. This is meant for auditing documents that
+    quote threats to teach detection; do not use it on untrusted input.
     """
     flagged = [f for f in findings if not f._structural]
-    if not flagged:
+    if not flagged or not _context_downgrade_enabled:
         return
-    basename = os.path.basename(relpath)
-    # Security-doc NAMES only grant a soft downgrade, and only for prose docs —
-    # an attacker naming a workflow/script "injection.yml" gets no cover.
-    is_prose = basename.lower().endswith((".md", ".txt"))
-    security_doc = is_prose and bool(SECURITY_DOC_NAME.search(basename))
-    defensive_lines = sum(1 for f in flagged if f._line_defensive)
-    ratio = defensive_lines / len(flagged)
-    defensive_doc = security_doc or ratio >= 0.5
     for f in flagged:
-        if defensive_doc and f._line_defensive:
+        if f._line_defensive:
             f._raw_rank = max(1, f._raw_rank - 2)
             f.context_downgraded = True
-        elif defensive_doc and security_doc and not f._line_defensive and not f._line_example:
-            f._raw_rank = max(1, f._raw_rank - 1)  # name-based soft cover
-            f.context_downgraded = True
-        elif defensive_doc and f._line_example:
+        elif f._line_example:
             f._raw_rank = max(1, f._raw_rank - 1)
             f.context_downgraded = True
-        # else: full severity — sprinkled context words do not help
         f.severity = RANK_SEV[f._raw_rank]
-        if not defensive_doc and (f._line_defensive or f._line_example):
-            f.note += " [context words present but file is not defensive-doc: no downgrade]"
 
 
 def scan_text(text: str, relpath: str, findings: list):
@@ -724,7 +712,9 @@ def _scan_one_file(args):
     return rel, local
 
 
-def scan_path(target: str) -> ScanResult:
+def scan_path(target: str, downgrade_context: bool = False) -> ScanResult:
+    global _context_downgrade_enabled
+    _context_downgrade_enabled = bool(downgrade_context)
     from concurrent.futures import ThreadPoolExecutor
     jobs = []
     for path in iter_text_files(target):
@@ -878,6 +868,9 @@ def main(argv=None):
                     help="Write current findings as a suppression baseline and exit 0")
     ap.add_argument("--version", action="store_true", help="Print scanner version and exit")
     ap.add_argument("--quiet", action="store_true", help="Only print the verdict line")
+    ap.add_argument("--context-downgrade", action="store_true",
+                    help="Opt-in: downgrade findings that appear in defensive/educational "
+                         "documents (disabled by default so severity is never silently lowered)")
     ap.add_argument("--fail-on", default="caution",
                     choices=["caution", "suspicious", "malicious", "never"],
                     help="Minimum verdict that exits non-zero (default: caution — "
@@ -896,7 +889,7 @@ def main(argv=None):
         print("error: target not found: %s" % args.target, file=sys.stderr)
         return 4
 
-    result = scan_path(args.target)
+    result = scan_path(args.target, downgrade_context=args.context_downgrade)
 
     # Baseline workflow: fingerprint-suppress acknowledged findings (enterprise triage)
     suppressed = 0
