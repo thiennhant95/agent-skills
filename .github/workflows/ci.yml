@@ -1,0 +1,44 @@
+name: ci
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: "skill-firewall harness (33 fixtures: 100% detection / 0% FP required)"
+        run: python3 skill-firewall/tests/test_firewall.py --evidence-dir /tmp/evidence
+
+      - name: "undo-first harness (12 cases: restore / tamper / risk gate)"
+        run: python3 undo-first/tests/test_undo_guard.py --evidence-dir /tmp/evidence
+
+      - name: "undo-first selfcheck (zero execution primitives)"
+        run: python3 undo-first/scripts/undo_guard.py selfcheck
+
+      - name: "self scan (informational SARIF; repo contains intentional test vectors)"
+        run: python3 skill-firewall/scripts/skill_firewall.py . --sarif > skill-scan.sarif
+        continue-on-error: true
+
+      - name: "positive control (malicious fixtures must stay caught)"
+        run: |
+          out=$(python3 skill-firewall/scripts/skill_firewall.py skill-firewall/tests/fixtures/malicious --quiet) || true
+          echo "$out"
+          echo "$out" | grep -q "MALICIOUS" || { echo "fixtures no longer detected — REGRESSION"; exit 1; }
+
+      - name: "negative control (benign fixtures must stay clean)"
+        run: |
+          out=$(python3 skill-firewall/scripts/skill_firewall.py skill-firewall/tests/fixtures/benign --quiet) || true
+          echo "$out"
+          echo "$out" | grep -qE "SAFE|CAUTION" || { echo "benign fixtures flagged — FALSE POSITIVE REGRESSION"; exit 1; }
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: skill-scan-sarif
+          path: skill-scan.sarif
