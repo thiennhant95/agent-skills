@@ -65,13 +65,13 @@ Files scanned: common code/doc extensions plus SKILL.md/AGENTS.md/TOOLS.md; skip
 
 ## Verification
 
-The bundled test harness proves detection with measurable evidence:
+The test harness lives in the source repository (not shipped in this bundle, which keeps intentional attack fixtures out of published artifacts): https://github.com/thiennhant95/agent-skills/tree/main/skill-firewall
 
 ```bash
 python3 tests/test_firewall.py
 ```
 
-Runs 13 malicious fixtures (inert test vectors, EICAR-style) and 10 benign fixtures (including false-positive stress cases: security education docs, `df.eval`, benign base64, `curl` without exfil). Acceptance: 100% detection, 0 false positives. Results are written as JSON + Markdown evidence. Never modify fixtures to make tests pass — they are the contract.
+Runs 18 malicious fixtures (inert test vectors, EICAR-style) and 15 benign fixtures (including false-positive stress cases: security education docs, `df.eval`, benign base64, `curl` without exfil). Acceptance: 100% detection, 0 false positives. Results are written as JSON + Markdown evidence. Never modify fixtures to make tests pass — they are the contract.
 
 ## Limitations (state these when reporting)
 
