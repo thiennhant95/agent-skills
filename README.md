@@ -27,7 +27,7 @@ VERDICT: 🚨 MALICIOUS   (risk score 145/100)
 <summary><b>What makes it different (click)</b></summary>
 
 - **Decodes before it judges** — base64 (multi-layer), hex escapes, and Unicode homoglyphs are normalized and re-scanned; hidden `ignore all previous instructions` payloads don't slip through
-- **Context engine** — a security doc that quotes attack strings to teach defense is NOT blocked; an attack file sprinkled with "Example:" still gets full severity
+- **Strict by default** — wording never lowers severity; `--context-downgrade` is an explicit opt-in for auditing defensive documents only
 - **SARIF 2.1.0** output for GitHub code scanning · **baseline fingerprints** for governed suppression · CI-ready exit codes (0 SAFE → 3 MALICIOUS)
 
 </details>
@@ -53,7 +53,7 @@ Agents act first and regret later: files deleted, emails sent, deploys pushed. U
 ```
 $ python3 scripts/undo_guard.py plan delete-draft.json
 PLAN GATE: REJECT
-  ✗ file_delete at risk=high with undo.kind='none' — take a snapshot or provide rollback steps
+  ✗ undo.kind='none' is not accepted — take a snapshot or provide rollback steps
 
 $ python3 scripts/undo_guard.py plan delete-draft-snapshotted.json
 PLAN GATE: ACCEPT
@@ -79,7 +79,7 @@ $ python3 scripts/undo_guard.py restore 20261113T152150856449Z
 |---|---|
 | Restore after modify / delete / multi-file tree corruption | **byte-identical (sha256) in all cases** |
 | Tampered backup attack | **REFUSED (hash mismatch detected)** |
-| Risk-gate decisions (irreversible, no-undo, unclassified…) | 6/6 correct |
+| Risk-gate decisions (snapshot validation, no-undo, operator override…) | **13/13 correct** |
 | Zero execution primitives in engine source | selfcheck PASSED |
 
 Full report: [`evidence/UNDO_TEST_REPORT.md`](evidence/UNDO_TEST_REPORT.md).
@@ -89,6 +89,15 @@ Full report: [`evidence/UNDO_TEST_REPORT.md`](evidence/UNDO_TEST_REPORT.md).
 ## 🚀 Install
 
 Both skills are **Python 3 stdlib only** — no `pip install`, works anywhere Python 3.8+ runs.
+
+### From ClawHub
+
+```bash
+clawhub install thiennhant95/skill-firewall
+clawhub install thiennhant95/undo-first
+```
+
+### From source
 
 | Agent | Where to drop the skill folders |
 |---|---|
@@ -110,10 +119,15 @@ Or install from source packages in [Releases](../../releases): `unzip skill-fire
 
 ```bash
 python3 skill-firewall/tests/test_firewall.py      # 33 fixtures → 100% / 0% FP
-python3 undo-first/tests/test_undo_guard.py        # 12 cases → 100%
+python3 undo-first/tests/test_undo_guard.py        # 23 cases → 100%
 python3 skill-firewall/scripts/skill_firewall.py . # scan this repo (it behaves)
 python3 undo-first/scripts/undo_guard.py selfcheck # zero execution primitives
 ```
+
+## 🔗 Related skills
+
+- **vibecheck** — audit AI-generated code before it ships (security + AI-slop score, SARIF, autofix): [ClawHub](https://clawhub.ai/thiennhant95/vibecheck) · [GitHub](https://github.com/thiennhant95/vibecheck)
+- **vibegit** — estimate how much of a repo is AI-assisted from git history (slop score, badge, CI gate): [ClawHub](https://clawhub.ai/thiennhant95/vibegit) · [GitHub](https://github.com/thiennhant95/vibegit)
 
 ## 📜 License
 

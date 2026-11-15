@@ -5,9 +5,15 @@ allowed-tools: Read, Bash(python3:*)
 permissions: [file_read, file_write]
 ---
 
-# Skill Firewall v1.0.4
+# Skill Firewall v1.0.5
 
 Static security scanner for third-party agent skills. Scan a skill before installing it.
+
+## Install
+
+```bash
+clawhub install thiennhant95/skill-firewall
+```
 
 ## Quick start
 
@@ -79,3 +85,9 @@ It runs 18 malicious fixtures (inert test vectors, EICAR-style) and 15 benign fi
 - Static analysis: semantic attacks written as plain honest prose without known patterns can evade it. Pair with `skill-vetter`-style manual review for high-risk installs.
 - Heavily obfuscated custom encodings (beyond base64/hex/charcode) may hide payloads.
 - Strict mode flags security-education documents that quote attack text. If you are auditing a known defensive document, rerun with `--context-downgrade` and still read the flagged lines manually.
+
+## Related skills
+
+- `undo-first` — reversible-action guard: snapshots, risk gate, verified restore, audit journal. `clawhub install thiennhant95/undo-first`
+- `vibecheck` — audit AI-generated code for security issues and AI slop. `clawhub install thiennhant95/vibecheck`
+- `vibegit` — estimate AI-assisted work and slop signals from git history. `clawhub install thiennhant95/vibegit`

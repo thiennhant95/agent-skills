@@ -29,7 +29,7 @@ import shutil
 import sys
 from datetime import datetime, timezone
 
-VERSION = "1.0.4"
+VERSION = "1.0.5"
 JOURNAL_DIR = ".undo-journal"
 SNAP_DIR = "snapshots"
 JOURNAL_FILE = "journal.jsonl"

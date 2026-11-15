@@ -26,7 +26,7 @@ import sys
 from dataclasses import dataclass, field, asdict
 from datetime import datetime, timezone
 
-SCANNER_VERSION = "1.1.3"
+SCANNER_VERSION = "1.1.4"
 RULESET_VERSION = "2026.11.13.2"
 
 # Strict by default: context keywords must NOT silently lower severity.
