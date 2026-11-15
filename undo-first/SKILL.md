@@ -33,7 +33,7 @@ clawhub install thiennhant95/undo-first
    python3 scripts/undo_guard.py verify <snapshot-id>   # what changed since snapshot?
    python3 scripts/undo_guard.py restore <snapshot-id> --yes  # byte-identical rollback
    ```
-   Restore is sha256-verified both ways: backups are checked against the manifest before restoring (tamper → REFUSED) and after (restored file must be byte-identical). It also removes files created after the snapshot inside the snapshot roots, so moves and directory changes roll back too. Because that overwrites/removes files, restore refuses to act without `--yes`; use `--keep-created` to preserve new work.
+   Restore is sha256-verified both ways: backups are checked against the manifest before restoring (tamper → REFUSED) and after (restored file must be byte-identical). It also removes files created after the snapshot inside the snapshot roots, so moves and directory changes roll back too. Because that overwrites/removes files, restore refuses to act without `--yes`; use `--keep-created` to preserve new work. Destinations that traverse a symlink are refused.
 6. **Journal** — every decision is already recorded in a hash-chained audit trail; show or verify it when asked:
    ```bash
    python3 scripts/undo_guard.py journal

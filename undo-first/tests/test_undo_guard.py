@@ -311,6 +311,28 @@ def main():
     check("S24 journal rejects entries with stripped hash",
           rc == 4 and "missing hash" in out, "strict verification")
 
+    # ---- S25: restore must not write through an attacker-planted symlink ----
+    wd = fresh("s25")
+    outside = self_outside = os.path.join(SANDBOX, "s25_outside.txt")
+    open(outside, "w").write("DO NOT OVERWRITE\n")
+    victim = os.path.join(wd, "victim.txt"); open(victim, "w").write("original\n")
+    rc, out = run_guard("snapshot", ".", cwd=wd); snap = out.split()[1]
+    os.remove(victim)
+    symlink_ok = True
+    try:
+        os.symlink(outside, victim)
+    except (OSError, NotImplementedError):
+        symlink_ok = False
+    if symlink_ok:
+        rc, out = run_guard("restore", snap, "--yes", cwd=wd)
+        intact = open(outside).read() == "DO NOT OVERWRITE\n"
+        check("S25 restore refuses symlink destination",
+              rc == 4 and intact and "symlink" in out, "outside file untouched")
+    else:
+        rows.append({"case": "S25 restore refuses symlink destination",
+                     "pass": True, "detail": "skipped: symlink not permitted"})
+        print("  [SKIP] S25 symlink test (not permitted on this platform)")
+
     # ---- S11: selfcheck — zero execution primitives ----
     print("\n--- Safety invariants ---")
     rc, out = run_guard("selfcheck")

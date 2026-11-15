@@ -16,7 +16,7 @@ jobs:
       - name: "skill-firewall harness (33 fixtures: 100% detection / 0% FP required)"
         run: python3 skill-firewall/tests/test_firewall.py --evidence-dir /tmp/evidence
 
-      - name: "undo-first harness (24 cases: restore / tamper / risk gate)"
+      - name: "undo-first harness (25 cases: restore / tamper / risk gate)"
         run: python3 undo-first/tests/test_undo_guard.py --evidence-dir /tmp/evidence
 
       - name: "undo-first selfcheck (zero execution primitives)"

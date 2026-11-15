@@ -29,7 +29,7 @@ import shutil
 import sys
 from datetime import datetime, timezone
 
-VERSION = "1.0.6"
+VERSION = "1.0.7"
 JOURNAL_DIR = ".undo-journal"
 SNAP_DIR = "snapshots"
 JOURNAL_FILE = "journal.jsonl"
@@ -201,6 +201,18 @@ def norm_rel(path: str) -> str:
     return os.path.normpath(path).replace("\\", "/")
 
 
+def unsafe_destination(path: str) -> bool:
+    """True when writing to path would traverse a symlink (directly or via parents)."""
+    p = os.path.abspath(path)
+    while True:
+        if os.path.islink(p):
+            return True
+        parent = os.path.dirname(p)
+        if parent == p:
+            return False
+        p = parent
+
+
 def present_under(roots):
     """List regular files currently present under snapshot roots (no links/journal)."""
     present = []
@@ -307,6 +319,9 @@ def cmd_restore(args):
         actual = sha256_file(backup)
         if actual != recorded:
             refused.append((f, "backup tampered (sha256 mismatch)"))
+            continue
+        if unsafe_destination(f):
+            refused.append((f, "refusing to restore through a symlink"))
             continue
         os.makedirs(os.path.dirname(f) or ".", exist_ok=True)
         shutil.copy2(backup, f)
