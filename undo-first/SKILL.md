@@ -1,6 +1,6 @@
 ---
 name: undo-first
-description: Reversible-action infrastructure for AI agents. Use before any side-effecting action (writing/deleting/moving files, config changes, git pushes, sending messages, deploys, API calls) when the user asks "can we roll this back?", "make this safe to try", or when executing risky multi-step work. Provides hash-verified snapshots, a risk gate that demands an undo or compensation plan before acting, byte-identical restore, and a tamper-evident audit journal. Philosophy: no undo path, no action.
+description: Reversible-action infrastructure for AI agents. Use before any side-effecting action (writing/deleting/moving files, config changes, git pushes, sending messages, deploys, API calls) when the user asks "can we roll this back?", "make this safe to try", or when executing risky multi-step work. Provides hash-verified snapshots, a risk gate that demands an undo or compensation plan before acting, byte-identical restore, and a tamper-evident audit journal. Philosophy - no undo path, no action.
 allowed-tools: Read, Write, Edit, Bash(python3 scripts/undo_guard.py:*)
 ---
 
