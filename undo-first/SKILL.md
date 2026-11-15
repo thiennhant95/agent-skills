@@ -8,12 +8,6 @@ allowed-tools: Read, Write, Edit, Bash(python3 scripts/undo_guard.py:*)
 
 **No undo path, no action.** Every side effect gets a verified way back — or it does not happen. There is no in-plan opt-out.
 
-## Install
-
-```bash
-clawhub install thiennhant95/undo-first
-```
-
 ## The workflow (always in this order)
 
 1. **Classify** the action: `file_write | file_delete | file_move | dir_change | config_change | git_push | external_message | deploy | api_call | payment | publish`
@@ -86,9 +80,3 @@ python3 tests/test_undo_guard.py
 - The journal is a local file. It is hash-chained and `journal --verify` is strict: edited, deleted, or hash-stripped entries are rejected. The file is still not immutable — anyone with filesystem write access can replace it wholesale. Store it outside the agent's write scope when audit integrity matters.
 - `selfcheck` is a literal-string heuristic over this one source file; it does not prove the absence of execution paths. Treat it as a smoke signal, not a security guarantee.
 - The risk gate validates plan *structure*, not the quality of compensation steps — write them concretely (who, what, by when).
-
-## Related skills
-
-- `skill-firewall` — scan third-party agent skills before installing them. `clawhub install thiennhant95/skill-firewall`
-- `vibecheck` — audit AI-generated code for security issues and AI slop. `clawhub install thiennhant95/vibecheck`
-- `vibegit` — estimate AI-assisted work and slop signals from git history. `clawhub install thiennhant95/vibegit`

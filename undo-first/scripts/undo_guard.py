@@ -29,7 +29,7 @@ import shutil
 import sys
 from datetime import datetime, timezone
 
-VERSION = "1.0.10"
+VERSION = "1.0.11"
 JOURNAL_DIR = ".undo-journal"
 SNAP_DIR = "snapshots"
 JOURNAL_FILE = "journal.jsonl"
@@ -261,6 +261,13 @@ def snapshot_problems(snap_id, targets):
         if n in keys:
             continue
         if any(k.startswith(n + "/") for k in keys):
+            if os.path.isdir(t):
+                missing = [f for f in present_under([t]) if norm_rel(f) not in keys]
+                if missing:
+                    problems.append(
+                        "snapshot %r covers only part of target directory %r "
+                        "(%d current file(s) are not in the snapshot)"
+                        % (snap_id, t, len(missing)))
             continue
         problems.append("snapshot %r does not cover action target %r" % (snap_id, t))
     return problems

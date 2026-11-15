@@ -328,6 +328,28 @@ def main():
                      "pass": True, "detail": "skipped: symlink not permitted"})
         print("  [SKIP] S25 symlink test (not permitted on this platform)")
 
+    # ---- S26: directory-wide action needs full directory coverage ----
+    wd = fresh("s26")
+    os.makedirs(os.path.join(wd, "reports"))
+    open(os.path.join(wd, "reports", "old.txt"), "w").write("old\n")
+    open(os.path.join(wd, "reports", "new.txt"), "w").write("new\n")
+    rc, out = run_guard("snapshot", "reports/old.txt", cwd=wd); snap = out.split()[1]
+    plan = {"action": {"type": "dir_change", "description": "rewrite reports dir",
+                       "target": "reports"},
+            "risk": "high",
+            "undo": {"kind": "builtin_restore", "steps": ["restore snapshot"],
+                     "snapshot": snap},
+            "verify": {}}
+    pf = os.path.join(wd, "plan.json"); json.dump(plan, open(pf, "w"))
+    rc, out = run_guard("plan", pf, cwd=wd)
+    check("S26 partial directory snapshot → REJECT", rc == 2 and "part of target directory" in out,
+          "exit=%d" % rc)
+    rc, out = run_guard("snapshot", "reports", cwd=wd); snap2 = out.split()[1]
+    plan["undo"]["snapshot"] = snap2
+    json.dump(plan, open(pf, "w"))
+    rc, out = run_guard("plan", pf, cwd=wd)
+    check("S26 full directory snapshot → ACCEPT", rc == 0, "exit=%d" % rc)
+
     # ---- S11: selfcheck — zero execution primitives ----
     print("\n--- Safety invariants ---")
     rc, out = run_guard("selfcheck")
