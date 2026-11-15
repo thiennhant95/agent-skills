@@ -42,7 +42,7 @@ One plan per action. The gate (`undo_guard.py plan`) validates structure determi
 | `builtin_restore` | Anything on disk — snapshot taken first | `snapshot` id **and** `target`/`targets` required; snapshot must exist, pass per-file backup sha256 integrity, and cover every target |
 | `commands` | Documented rollback exists (git revert, deploy rollback) | `steps` non-empty **and** `verify.check` present |
 | `compensation` | Irreversible in the real world (email, payment, publish, or any class) | `steps` non-empty (strings) — enforced for file actions too |
-| `none` | Nothing recoverable available | REJECT for every action class, including `risk=low` — a plan cannot self-authorize. Operator override `--allow-no-undo` downgrades it to ACCEPT_WITH_WARNING (exit 1) |
+| `none` | Nothing recoverable available | REJECT for every action class, including `risk=low` — a plan cannot self-authorize |
 
 `steps`: array of concrete rollback/mitigation instructions (for the agent/human — the engine does not run them).
 `snapshot`: snapshot id when `kind=builtin_restore`; validated against `.undo-journal/snapshots/<id>/manifest.json`.

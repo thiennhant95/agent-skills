@@ -29,7 +29,7 @@ import shutil
 import sys
 from datetime import datetime, timezone
 
-VERSION = "1.0.8"
+VERSION = "1.0.10"
 JOURNAL_DIR = ".undo-journal"
 SNAP_DIR = "snapshots"
 JOURNAL_FILE = "journal.jsonl"
@@ -354,7 +354,7 @@ def cmd_restore(args):
 # ---------------------------------------------------------------------------
 # plan — risk gate (plans are DATA; this tool never executes plan contents)
 # ---------------------------------------------------------------------------
-def validate_plan(plan: dict, allow_no_undo: bool = False):
+def validate_plan(plan: dict):
     """Return (verdict, [reasons], [warnings]). Deterministic risk-gate rules."""
     reasons, warnings = [], []
     action = plan.get("action") or {}
@@ -388,13 +388,8 @@ def validate_plan(plan: dict, allow_no_undo: bool = False):
         reasons.append("undo.kind='compensation' requires non-empty undo.steps "
                        "(concrete mitigation for every action class)")
     if kind == "none":
-        if allow_no_undo:
-            warnings.append("undo.kind='none' was explicitly authorized by the operator "
-                            "(--allow-no-undo); this action has no verified way back")
-        else:
-            reasons.append("undo.kind='none' is not accepted for any side-effecting action — "
-                           "take a snapshot (builtin_restore), provide rollback steps, or have "
-                           "the operator rerun the gate with --allow-no-undo")
+        reasons.append("undo.kind='none' is not accepted for any side-effecting action — "
+                       "take a snapshot (builtin_restore) or provide rollback steps")
     if kind == "builtin_restore":
         reasons.extend(snapshot_problems(undo.get("snapshot"), targets))
     if kind == "commands":
@@ -417,7 +412,7 @@ def validate_plan(plan: dict, allow_no_undo: bool = False):
 def cmd_plan(args):
     with open(args.plan_file, "r", encoding="utf-8") as fh:
         plan = json.load(fh)
-    verdict, reasons, warnings = validate_plan(plan, allow_no_undo=args.allow_no_undo)
+    verdict, reasons, warnings = validate_plan(plan)
     print("PLAN GATE: %s  (%s)" % (verdict, args.plan_file))
     for r in reasons:
         print("  ✗ %s" % r)
@@ -502,8 +497,6 @@ def main(argv=None):
 
     p = sub.add_parser("plan", help="risk-gate an undo plan (JSON)")
     p.add_argument("plan_file")
-    p.add_argument("--allow-no-undo", action="store_true",
-                   help="operator override: accept an undo.kind='none' plan with a warning")
 
     p = sub.add_parser("journal", help="show the audit trail (tamper-evident hash chain)")
     p.add_argument("--last", type=int, default=20)

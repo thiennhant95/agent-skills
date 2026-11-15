@@ -6,7 +6,7 @@ allowed-tools: Read, Write, Edit, Bash(python3 scripts/undo_guard.py:*)
 
 # Undo-First Guard
 
-**No undo path, no action.** Every side effect gets a verified way back — or it does not happen. The only escape hatch is an explicit operator override (`--allow-no-undo`) given outside the plan file; without it, a plan cannot self-classify itself into acceptance.
+**No undo path, no action.** Every side effect gets a verified way back — or it does not happen. There is no in-plan opt-out.
 
 ## Install
 
@@ -47,7 +47,7 @@ clawhub install thiennhant95/undo-first
 - **`builtin_restore`** requires `undo.snapshot` (a real snapshot id) **and** `action.target` (or `action.targets`). The gate loads the snapshot, re-hashes every backup, and rejects missing, tampered, or non-covering snapshots.
 - **`undo.kind = "compensation"`** requires non-empty, concrete steps for every action class (file actions included).
 - **`undo.kind = "commands"`** requires non-empty steps AND `verify.check` proving restoration.
-- **`undo.kind = "none"` → REJECT** for every action type, including low risk. The plan cannot opt out by declaring itself low-risk; only the operator can pass `--allow-no-undo`, which downgrades that decision to an explicit warning (exit 1).
+- **`undo.kind = "none"` → REJECT** for every action type, including low risk. There is no in-plan opt-out: take a snapshot or provide rollback/compensation.
 - **Unknown action type → REJECT.** Classify first.
 
 ## Static source self-check (limited)
@@ -67,7 +67,7 @@ It looks for literals such as `os.system`, `subprocess`, `eval(` and reports eac
 | Files/dirs/config on disk | `builtin_restore` (snapshot first, then cite `snapshot` + `target`) |
 | Git/deploy where a documented rollback command exists | `commands` + `verify.check` |
 | Email, messages, payments, publishes (cannot be unsent) | `compensation` (mitigation steps) |
-| Trivially reproducible, low risk | `none` only with operator override `--allow-no-undo` (exit 1 warning) |
+| Trivially reproducible, low risk | `none` is never accepted — snapshot or provide rollback steps |
 
 ## Verification
 

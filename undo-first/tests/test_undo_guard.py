@@ -274,12 +274,7 @@ def main():
     json.dump(plan, open(pf, "w"))
     rc, out = run_guard("plan", pf, cwd=wd)
     check("S20 low-risk action without undo → REJECT",
-          rc == 2 and "allow-no-undo" in out, "exit=%d" % rc)
-
-    # ---- S21: operator override flag is trusted (outside the plan) → ACCEPT_WITH_WARNING ----
-    rc, out = run_guard("plan", pf, "--allow-no-undo", cwd=wd)
-    check("S21 operator --allow-no-undo → ACCEPT_WITH_WARNING", rc == 1,
-          "exit=%d" % rc)
+          rc == 2 and "not accepted" in out, "exit=%d" % rc)
 
     # ---- S19: journal hash chain verifies, and detects edits ----
     wdj = os.path.join(SANDBOX, "s13")
