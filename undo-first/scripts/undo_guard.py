@@ -29,7 +29,7 @@ import shutil
 import sys
 from datetime import datetime, timezone
 
-VERSION = "1.0.5"
+VERSION = "1.0.6"
 JOURNAL_DIR = ".undo-journal"
 SNAP_DIR = "snapshots"
 JOURNAL_FILE = "journal.jsonl"
@@ -132,7 +132,11 @@ def verify_journal():
     for idx, entry in enumerate(entries, 1):
         stored = entry.get("hash")
         if not stored:
+            # Strict: a stripped hash must not be accepted as a legacy entry,
+            # otherwise an edited record could silently pass verification.
             legacy += 1
+            problems.append("entry %d: missing hash (legacy or stripped) - cannot verify"
+                            % idx)
             prev = ""
             continue
         if entry.get("prev", "") != prev:

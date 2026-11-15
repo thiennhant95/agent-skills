@@ -119,7 +119,7 @@ Or install from source packages in [Releases](../../releases): `unzip skill-fire
 
 ```bash
 python3 skill-firewall/tests/test_firewall.py      # 33 fixtures → 100% / 0% FP
-python3 undo-first/tests/test_undo_guard.py        # 23 cases → 100%
+python3 undo-first/tests/test_undo_guard.py        # 24 cases → 100%
 python3 skill-firewall/scripts/skill_firewall.py . # scan this repo (it behaves)
 python3 undo-first/scripts/undo_guard.py selfcheck # zero execution primitives
 ```

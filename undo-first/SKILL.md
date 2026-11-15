@@ -83,7 +83,7 @@ python3 tests/test_undo_guard.py
 - Restore removes files created after the snapshot but leaves any newly created empty directories in place.
 - Snapshots consume disk proportional to target size; snapshot specific paths, not whole disks.
 - The gate re-hashes snapshot backups on every `builtin_restore` plan, so very large snapshots make gating slower — snapshot the affected paths, not whole disks.
-- The journal is a local file. It is hash-chained (edits or deletions are detectable with `journal --verify`) but not immutable: anyone with filesystem write access can still replace it wholesale. Store it outside the agent's write scope when audit integrity matters.
+- The journal is a local file. It is hash-chained and `journal --verify` is strict: edited, deleted, or hash-stripped entries are rejected. The file is still not immutable — anyone with filesystem write access can replace it wholesale. Store it outside the agent's write scope when audit integrity matters.
 - `selfcheck` is a literal-string heuristic over this one source file; it does not prove the absence of execution paths. Treat it as a smoke signal, not a security guarantee.
 - The risk gate validates plan *structure*, not the quality of compensation steps — write them concretely (who, what, by when).
 

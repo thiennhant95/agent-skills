@@ -292,6 +292,25 @@ def main():
     check("S19 journal hash chain detects edits",
           clean and rc == 4 and "BROKEN" in out, "tamper detected")
 
+    # ---- S24: stripping hash fields must not be accepted as "legacy" ----
+    wd = fresh("s24")
+    f = os.path.join(wd, "a.txt"); open(f, "w").write("x\n")
+    rc, out = run_guard("snapshot", ".", cwd=wd); snap = out.split()[1]
+    open(f, "w").write("y\n")
+    run_guard("restore", snap, "--yes", cwd=wd)
+    jpath = os.path.join(wd, ".undo-journal", "journal.jsonl")
+    stripped = []
+    for line in open(jpath, encoding="utf-8").read().splitlines():
+        if not line.strip():
+            continue
+        entry = json.loads(line)
+        entry.pop("hash", None)
+        stripped.append(json.dumps(entry, ensure_ascii=False))
+    open(jpath, "w", encoding="utf-8").write("\n".join(stripped) + "\n")
+    rc, out = run_guard("journal", "--verify", cwd=wd)
+    check("S24 journal rejects entries with stripped hash",
+          rc == 4 and "missing hash" in out, "strict verification")
+
     # ---- S11: selfcheck — zero execution primitives ----
     print("\n--- Safety invariants ---")
     rc, out = run_guard("selfcheck")
